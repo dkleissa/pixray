@@ -600,7 +600,7 @@ def do_init(args):
 
     # set device only once
     if device is None:
-        device = torch.device(args.cuda_device if torch.cuda.is_available() else 'cpu')
+        device = torch.device(f"cuda:{args.cuda_device}" if torch.cuda.is_available() else 'cpu')
 
     drawer = class_table[args.drawer](args)
     drawer.load_model(args, device)
