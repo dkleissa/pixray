@@ -1189,7 +1189,7 @@ def checkin(args, iter, losses):
             if args.display_clear:
                 clear_output()
             display.display(display.Image(outfile))
-    tqdm.write(writestr)
+    tqdm.write(writestr, file=sys.stdout)
 
 def ascend_txt(args):
     global cur_iteration, cur_anim_index, perceptors, cutoutsTable, cutoutSizeTable # normalize, 
