@@ -1543,7 +1543,7 @@ def do_run(args, return_display=False):
 
         step_iteration = 0
 
-        with tqdm() as pbar:
+        with tqdm(file=sys.stdout) as pbar:
             while True:
                 cur_images = []
                 for i in range(num_anim_frames):
@@ -1574,7 +1574,7 @@ def do_run(args, return_display=False):
     else:
         try:
             keep_going = True
-            with tqdm() as pbar:
+            with tqdm(file=sys.stdout) as pbar:
                 while keep_going:
                     try:
                         keep_going = train(args, cur_iteration)
