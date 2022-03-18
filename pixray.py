@@ -1169,7 +1169,7 @@ def checkin(args, iter, losses):
     if filters is not None and len(filters)>0:
         for f in filters:
             filtclass = f["filter"]
-            timg, closs = filtclass(timg);
+            timg, closs = filtclass(timg)
 
     img = TF.to_pil_image(timg[0].cpu())
     # img = drawer.to_image()
@@ -1504,6 +1504,7 @@ def check_new_filelist(filelist_old_source, filelist_old, filelist_cur_source, f
 def do_run(args, return_display=False):
     global cur_iteration, cur_anim_index
     global anim_cur_zs, anim_next_zs, anim_output_files
+    global drawer
 
     print("Cleaning up CUDA memory...")
     torch.cuda.empty_cache()
@@ -1604,6 +1605,9 @@ def do_run(args, return_display=False):
     print("Finishing up task...")
     print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
     torch.cuda.empty_cache()
+    del drawer
+    import gc
+    gc.collect()
     print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
     return True
 
