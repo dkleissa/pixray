@@ -1505,6 +1505,10 @@ def do_run(args, return_display=False):
     global cur_iteration, cur_anim_index
     global anim_cur_zs, anim_next_zs, anim_output_files
 
+    print("Cleaning up CUDA memory...")
+    torch.cuda.empty_cache()
+    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
+
     if args.animation_dir is not None:
         # we already have z_targets. setup some sort of global ring
         # we need something like
@@ -1589,13 +1593,18 @@ def do_run(args, return_display=False):
                     except RuntimeError as e:
                         print("Oops: runtime error: ", e)
                         print("Try reducing --num-cuts to save memory")
+                        torch.cuda.empty_cache()
                         raise e
         except KeyboardInterrupt:
             pass
 
     if args.make_video:
         do_video(args)
-
+    
+    print("Finishing up task...")
+    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
+    torch.cuda.empty_cache()
+    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
     return True
 
 def do_video(args):
