@@ -1508,7 +1508,7 @@ def do_run(args, return_display=False):
 
     print("Cleaning up CUDA memory...")
     torch.cuda.empty_cache()
-    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
+    print(torch.cuda.memory_summary(device=args.cuda_device, abbreviated=False))
 
     if args.animation_dir is not None:
         # we already have z_targets. setup some sort of global ring
@@ -1603,12 +1603,12 @@ def do_run(args, return_display=False):
         do_video(args)
     
     print("Finishing up task...")
-    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
+    print(torch.cuda.memory_summary(device=args.cuda_device, abbreviated=False))
     torch.cuda.empty_cache()
     del drawer
     import gc
     gc.collect()
-    print(torch.cuda.memory_summary(device=gpu_id, abbreviated=False))
+    print(torch.cuda.memory_summary(device=args.cuda_device, abbreviated=False))
     return True
 
 def do_video(args):
