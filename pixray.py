@@ -1593,7 +1593,8 @@ def do_run(args, return_display=False):
                             return False
                     except RuntimeError as e:
                         print("Oops: runtime error: ", e)
-                        print("Try reducing --num-cuts to save memory")
+                        print("Try reducing --num-cuts to save memory")                        
+                        print(torch.cuda.memory_summary(device=args.cuda_device, abbreviated=False))
                         torch.cuda.empty_cache()
                         raise e
         except KeyboardInterrupt:
